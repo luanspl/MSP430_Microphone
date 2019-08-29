@@ -2,7 +2,8 @@
 Acquire data from a microphone using MSP430
 
 Tree:
-.
+
+
 ├── DATASHEET
 │   ├── Link_Guide.txt
 │   ├── Microphone_Sparkfun
