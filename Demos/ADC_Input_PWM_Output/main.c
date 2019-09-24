@@ -35,7 +35,7 @@
 #include <msp430.h>
 #include <stdint.h>
 
-volatile unsigned uint16_t result = 0;
+volatile uint16_t result = 0;
 
 int main(void)
 {
