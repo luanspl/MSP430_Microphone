@@ -9,6 +9,7 @@
 */
 //****************************************************************************
 //
+//       MCLK -> DCO = 1MHZ, ACLK -> LFXTCLK (~32Khz) = 32.768 Hz, SMCLK -> DCO (1Mhz / 32) = 31.250 hz
 //
 //                MSP430FR5969
 //  Vin= 5V    -----------------
@@ -32,8 +33,9 @@
 //
 //****************************************************************************
 #include <msp430.h>
+#include <stdint.h>
 
-//volatile unsigned int result = 0;
+volatile unsigned uint16_t result = 0;
 
 int main(void)
 {
@@ -101,10 +103,11 @@ __interrupt void ADC12_ISR(void){
     //ADC12MEM0
     P1OUT ^= BIT0;                                                   // Output Led to verify if the ADC interrupt is OK
 
-    if(ADC12MEM0>=0x0340 && ADC12MEM0 < 0x0A80){                     //  ADC >= 822 AND ADC < 2688
+    result = ADC12MEM0;
+    if(result>=0x0340 && result < 0x0A80){                     //  ADC >= 822 AND ADC < 2688
         TB0CCR1 = 450;                  //   PWM Duty Cycle (45%)
     }
-    else if(ADC12MEM0>=0x0A80){                                      // ADC > = 2688
+    else if(result>=0x0A80){                                      // ADC > = 2688
         TB0CCR1 = 900;                  //   PWM Duty Cycle (90%)
     }
     else{
